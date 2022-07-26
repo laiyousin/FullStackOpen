@@ -28,10 +28,11 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
+  let sum = props.part[0].exercises + props.part[1].exercises + props.part[2].exercises
   return (
     <>
       <p>
-        Number of exercises {props.exercises1 + props.exercises2 + props.exercises3}
+        Number of exercises {sum}
       </p>
     </>
   )
@@ -58,9 +59,10 @@ const App = () => {
     <div>
       <Header course= {course} />
       <Content part= {part} />
-      <Total exercises1= {part[0].exercises} exercises2= {part[1].exercises} exercises3= {part[2].exercises} />
+      <Total part= {part} />
     </div>
   )
+  // 每個compoenet會回傳一個object，裡面存有不同properties，以Content為例，object中有一property：part，再根據各compoenet所需取得property的內容物。
 }
 
 export default App
