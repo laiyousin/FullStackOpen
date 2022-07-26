@@ -1,8 +1,7 @@
 const Header = (props) => {
-  console.log(props)
   return (
     <>
-      <h1>{props.course}</h1>
+      <h1>{props.course.name}</h1>
     </>
   )
 }
@@ -20,15 +19,15 @@ const Part = (props) => {
 const Content = (props) => {
   return (
     <>
-      <Part part= {props.part[0].name} exercises= {props.part[0].exercises} />
-      <Part part= {props.part[1].name} exercises= {props.part[1].exercises} />
-      <Part part= {props.part[2].name} exercises= {props.part[2].exercises} />
+      <Part part= {props.course.part[0].name} exercises= {props.course.part[0].exercises} />
+      <Part part= {props.course.part[1].name} exercises= {props.course.part[1].exercises} />
+      <Part part= {props.course.part[2].name} exercises= {props.course.part[2].exercises} />
     </>
   )
 }
 
 const Total = (props) => {
-  let sum = props.part[0].exercises + props.part[1].exercises + props.part[2].exercises
+  let sum = props.course.part[0].exercises + props.course.part[1].exercises + props.course.part[2].exercises
   return (
     <>
       <p>
@@ -39,27 +38,29 @@ const Total = (props) => {
 }
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part = [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
+  const course = {
+    name: 'Half Stack application development',
+    part: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
 
   return (
     <div>
       <Header course= {course} />
-      <Content part= {part} />
-      <Total part= {part} />
+      <Content course= {course} />
+      <Total course= {course} />
     </div>
   )
   // 每個compoenet會回傳一個object，裡面存有不同properties，以Content為例，object中有一property：part，再根據各compoenet所需取得property的內容物。
