@@ -1,69 +1,39 @@
-const Header = (props) => {
+import { useState } from "react"
+
+const Display = (props) => {
   return (
-    <>
-      <h1>{props.course.name}</h1>
-    </>
+    <div>{props.counter}</div>
   )
 }
 
-const Part = (props) => {
+const Button = (props) => {
   return (
-    <>
-      <p>
-        {props.part} {props.exercises}
-      </p>
-    </>
+    <button onClick={props.onClick}>
+      {props.text}
+    </button>
   )
 }
-
-const Content = (props) => {
-  return (
-    <>
-      <Part part= {props.course.part[0].name} exercises= {props.course.part[0].exercises} />
-      <Part part= {props.course.part[1].name} exercises= {props.course.part[1].exercises} />
-      <Part part= {props.course.part[2].name} exercises= {props.course.part[2].exercises} />
-    </>
-  )
-}
-
-const Total = (props) => {
-  let sum = props.course.part[0].exercises + props.course.part[1].exercises + props.course.part[2].exercises
-  return (
-    <>
-      <p>
-        Number of exercises {sum}
-      </p>
-    </>
-  )
-}
-
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    part: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+  const [ counter, setCounter ] = useState(0)
+
+  //若在此使用箭頭函式，則每次觸發按鈕事件時才進入函式。
+  //若在此使用普通函式，則會因為按鈕事件，改變counter，改變counter會觸發re-render，re-render時又會改變counter，以此類推造成re-render次數過多。
+  const increaseByOne = () => setCounter(counter + 1)
+  const setToZero = () => setCounter(0)
 
   return (
     <div>
-      <Header course= {course} />
-      <Content course= {course} />
-      <Total course= {course} />
+      <Display counter={counter}/>
+      <Button 
+        onClick= {increaseByOne} 
+        text= 'ADD' 
+        />
+      <Button
+        onClick= {setToZero}
+        text= 'ZERO'
+      />
     </div>
   )
-  // 每個compoenet會回傳一個object，裡面存有不同properties，以Content為例，object中有一property：part，再根據各compoenet所需取得property的內容物。
 }
 
 export default App
