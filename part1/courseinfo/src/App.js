@@ -1,32 +1,28 @@
 import { useState } from "react"
 
 const App = () => {
-  const [clicks, setClicks] = useState({
-    left: 0, right: 0
-  })
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
 
   const handleLeftClick = () => {
-    setClicks({ 
-      ...clicks,
-      left: clicks.left + 1
-    })
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
   }
 
   const handleRightClick = () => {
-    setClicks({ 
-      ...clicks, 
-      right: clicks.right + 1 
-    })
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
   }
-  // React forbidden "clicks.left ++" or "clicks.right ++", 改變state需要設定state一個新的object, 
-  // 若從前一個state來的properties沒有改變, 則在新的object中複製前state中的所有properties, 並設定為新的state。
-
+  // 不可用allClicks.push()，push會直接更改allClicks，但concat則是重新複製一個新的。
+  // join：將allClicks的內容物轉成string
   return (
     <div>
-      {clicks.left}
+      {left}
       <button onClick={handleLeftClick}>left</button>
       <button onClick={handleRightClick}>right</button>
-      {clicks.right}
+      {right}
+      <p>{allClicks.join(' ')}</p>
     </div>
   )
 }
