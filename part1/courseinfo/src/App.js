@@ -1,37 +1,32 @@
 import { useState } from "react"
 
-const Display = (props) => {
-  return (
-    <div>{props.counter}</div>
-  )
-}
-
-const Button = (props) => {
-  return (
-    <button onClick={props.onClick}>
-      {props.text}
-    </button>
-  )
-}
 const App = () => {
-  const [ counter, setCounter ] = useState(0)
+  const [clicks, setClicks] = useState({
+    left: 0, right: 0
+  })
 
-  //若在此使用箭頭函式，則每次觸發按鈕事件時才進入函式。
-  //若在此使用普通函式，則會因為按鈕事件，改變counter，改變counter會觸發re-render，re-render時又會改變counter，以此類推造成re-render次數過多。
-  const increaseByOne = () => setCounter(counter + 1)
-  const setToZero = () => setCounter(0)
+  const handleLeftClick = () => {
+    setClicks({ 
+      ...clicks,
+      left: clicks.left + 1
+    })
+  }
+
+  const handleRightClick = () => {
+    setClicks({ 
+      ...clicks, 
+      right: clicks.right + 1 
+    })
+  }
+  // React forbidden "clicks.left ++" or "clicks.right ++", 改變state需要設定state一個新的object, 
+  // 若從前一個state來的properties沒有改變, 則在新的object中複製前state中的所有properties, 並設定為新的state。
 
   return (
     <div>
-      <Display counter={counter}/>
-      <Button 
-        onClick= {increaseByOne} 
-        text= 'ADD' 
-        />
-      <Button
-        onClick= {setToZero}
-        text= 'ZERO'
-      />
+      {clicks.left}
+      <button onClick={handleLeftClick}>left</button>
+      <button onClick={handleRightClick}>right</button>
+      {clicks.right}
     </div>
   )
 }
